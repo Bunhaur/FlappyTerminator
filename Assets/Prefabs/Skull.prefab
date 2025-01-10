@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 5825623403074272721, guid: fab89de992b4b2d49b82b4e31994aefe, type: 3}
-  _poolCapacity: 3
+  _poolCapacity: 5
   _maxSize: 10
 --- !u!1 &9126518142151861099
 GameObject:
