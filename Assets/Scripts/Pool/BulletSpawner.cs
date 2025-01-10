@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BulletSpawner : Spawner<Bullet>
 {
-    private bool _canShoot;
+    private bool _canSpawn;
 
     private void Awake()
     {
@@ -15,12 +15,12 @@ public class BulletSpawner : Spawner<Bullet>
         OffActiveObjects();
     }
 
-    public void Shoot(Quaternion rotation)
+    public void TakeObjectInPool(Quaternion rotation)
     {
-        if (_canShoot == false)
+        if (_canSpawn == false)
             return;
 
-        _canShoot = false;
+        _canSpawn = false;
         StartTimeOutWork = StartCoroutine(StartTimeOut());
 
         Pool.TakeObject(transform.position, rotation);
@@ -30,13 +30,13 @@ public class BulletSpawner : Spawner<Bullet>
     {
         base.Init();
 
-        _canShoot = true;
+        _canSpawn = true;
     }
 
     private IEnumerator StartTimeOut()
     {
         yield return Delay;
 
-        _canShoot = true;
+        _canSpawn = true;
     }
 }

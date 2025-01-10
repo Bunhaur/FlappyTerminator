@@ -15,18 +15,6 @@ public class StartScreen : Window
         Button.onClick.RemoveListener(OnClick);
     }
 
-    public override void Open()
-    {
-        CanvasGroup.alpha = 1.0f;
-        CanvasGroup.interactable = true;
-    }
-
-    public override void Closed()
-    {
-        CanvasGroup.alpha = 0f;
-        CanvasGroup.interactable = false;
-    }
-
     private void OnClick()
     {
         Clicked?.Invoke();

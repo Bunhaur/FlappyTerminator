@@ -8,32 +8,40 @@ public class Game : MonoBehaviour
     [SerializeField] private ScoreViever _score;
     [SerializeField] private Player _player;
 
+    private float _openAlphaValue = 1;
+    private float _closeAlphaValue = 0;
+
     private void Awake()
     {
         Init();
 
-        _endScreen.Closed();
-        _startScreen.Open();
+        _endScreen.Closed(_closeAlphaValue, false);
+        _startScreen.Open(_openAlphaValue, true);
     }
 
     private void OnEnable()
     {
         _startScreen.Clicked += StartGame;
         _endScreen.Clicked += RestartGame;
-        _player.Dead += _endScreen.Open;
+        _player.Dead += OpenRestartScreen;
     }
 
     private void OnDisable()
     {
         _startScreen.Clicked += StartGame;
         _endScreen.Clicked -= RestartGame;
-        _player.Dead -= _endScreen.Open;
+        _player.Dead -= OpenRestartScreen;
+    }
+
+    private void OpenRestartScreen()
+    {
+        _endScreen.Open(_openAlphaValue, true);
     }
 
     private void RestartGame()
     {
         _enemiesSpawner.Reset();
-        _endScreen.Closed();
+        _endScreen.Closed(_closeAlphaValue, false);
         _player.Reset();
         _score.Reset();
     }

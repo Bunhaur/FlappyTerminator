@@ -14,7 +14,7 @@ public class Pool<T> : MonoBehaviour where T : PoolItem<T>
 
     private ObjectPool<PoolItem<T>> _pool;
 
-    public event Action Dead;
+    public event Action Returned;
 
     private void Awake()
     {
@@ -38,7 +38,7 @@ public class Pool<T> : MonoBehaviour where T : PoolItem<T>
 
     private void ReturnObject(PoolItem<T> item)
     {
-        Dead?.Invoke();
+        Returned?.Invoke();
         _pool.Release(item);
     }
 

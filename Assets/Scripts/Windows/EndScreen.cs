@@ -15,18 +15,18 @@ public class EndScreen : Window
         Button.onClick.RemoveListener(OnClick);
     }
 
-    public override void Open()
+    public override void Open(float alpha, bool isInteractable)
     {
         Time.timeScale = 0f;
-        CanvasGroup.alpha = 1.0f;
-        CanvasGroup.interactable = true;
+
+        base.Open(alpha, isInteractable);
     }
 
-    public override void Closed()
+    public override void Closed(float alpha, bool isInteractable)
     {
         Time.timeScale = 1f;
-        CanvasGroup.alpha = 0f;
-        CanvasGroup.interactable = false;
+
+        base.Closed(alpha, isInteractable);
     }
 
     private void OnClick()

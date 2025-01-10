@@ -11,6 +11,6 @@ public class Gun : MonoBehaviour
 
     public void Shoot()
     {
-        _spawner.Shoot(transform.rotation);
+        _spawner.TakeObjectInPool(transform.rotation);
     }
 }

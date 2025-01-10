@@ -9,7 +9,15 @@ public abstract class Window : MonoBehaviour
     protected CanvasGroup CanvasGroup => _canvasGroup;
     protected Button Button => _button;
 
-    public abstract void Open();
+    public virtual void Open(float alpha, bool isInteractable)
+    {
+        CanvasGroup.alpha = alpha;
+        CanvasGroup.interactable = isInteractable;
+    }
 
-    public abstract void Closed();
+    public virtual void Closed(float alpha, bool isInteractable)
+    {
+        CanvasGroup.alpha = alpha;
+        CanvasGroup.interactable = isInteractable;
+    }
 }

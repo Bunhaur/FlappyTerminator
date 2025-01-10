@@ -10,12 +10,12 @@ public class ScoreViever : MonoBehaviour
 
     private void OnEnable()
     {
-        _pool.Dead += AddCount;
+        _pool.Returned += AddCount;
     }
 
     private void OnDisable()
     {
-        _pool.Dead -= AddCount;
+        _pool.Returned -= AddCount;
     }
 
     public void Reset()
