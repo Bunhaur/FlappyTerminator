@@ -29,7 +29,7 @@ public class Bullet : PoolItem<Bullet>, ITouchable
         if (collision.TryGetComponent(out ITouchable item))
         {
             DeadAction();
-            StopCoroutine(Timer());
+            StopCoroutine(_timerWork);
         }
     }
 

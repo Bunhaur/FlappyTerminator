@@ -14,11 +14,8 @@ public class TargetFolower : MonoBehaviour
 
     private void Folow()
     {
-        if (_target != null)
-        {
-            _newPosition.x = _target.transform.position.x + _offsetX;
-            _newPosition.z = transform.position.z;
-            transform.position = _newPosition;
-        }
+        _newPosition.x = _target.transform.position.x + _offsetX;
+        _newPosition.z = transform.position.z;
+        transform.position = _newPosition;
     }
 }

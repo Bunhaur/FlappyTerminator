@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerRotation))]
@@ -10,9 +11,12 @@ public class Player : MonoBehaviour, ITouchable
 {
     private PlayerRotation _rotation;
     private PlayerMover _playerMover;
+    private Vector2 _defaultPosition;
     private PlayerJumper _jumper;
     private HandlerInput _input;
     private Gun _gun;
+
+    public event Action Dead;
 
     private void Awake()
     {
@@ -34,7 +38,18 @@ public class Player : MonoBehaviour, ITouchable
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out ITouchable item))
-            Destroy(gameObject);
+        {
+            Dead?.Invoke();
+            _input.SetCanInput(false);
+        }
+    }
+
+    public void Reset()
+    {
+        transform.position = _defaultPosition;
+        _playerMover.ResetVelocity();
+        _playerMover.ResetAngular();
+        _input.SetCanInput(true);
     }
 
     private void Init()
@@ -44,6 +59,8 @@ public class Player : MonoBehaviour, ITouchable
         _jumper = GetComponent<PlayerJumper>();
         _input = GetComponent<HandlerInput>();
         _gun = GetComponent<Gun>();
+
+        _defaultPosition = transform.position;
     }
 
     private void Jump()

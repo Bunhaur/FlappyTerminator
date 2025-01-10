@@ -23,6 +23,11 @@ public class PlayerMover : MonoBehaviour
         _rigidBody.angularVelocity = 0;
     }
 
+    public void ResetVelocity()
+    {
+        _rigidBody.velocity = Vector2.zero;
+    }
+
     private void Init()
     {
         _rigidBody = GetComponent<Rigidbody2D>();

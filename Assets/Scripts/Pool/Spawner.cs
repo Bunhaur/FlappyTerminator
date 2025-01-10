@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public abstract class Spawner<T> : MonoBehaviour where T : PoolItem<T>
@@ -15,8 +14,8 @@ public abstract class Spawner<T> : MonoBehaviour where T : PoolItem<T>
         Delay = new WaitForSeconds(_spawnDelay);
     }
 
-    protected virtual IEnumerator Timer()
+    protected void OffActiveObjects()
     {
-        yield return Delay;
+        Pool.ReturnAllObjectsInPool();
     }
 }

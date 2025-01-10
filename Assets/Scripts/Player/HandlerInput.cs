@@ -6,6 +6,8 @@ public class HandlerInput : MonoBehaviour
     [SerializeField] private KeyCode _jumpButton;
     [SerializeField] private KeyCode _fireButton;
 
+    private bool _canInput = true;
+
     public event Action JumpButtonPushed;
     public event Action FireButtonPushed;
 
@@ -14,14 +16,20 @@ public class HandlerInput : MonoBehaviour
         GetPushButton();
     }
 
+    public void SetCanInput(bool canInput)
+    {
+        _canInput = canInput;
+    }
+
     private void GetPushButton()
     {
-        if (Input.anyKeyDown == false)
+        if (Input.anyKeyDown == false || _canInput == false)
             return;
 
         if (Input.GetKeyDown(_jumpButton))
             JumpButtonPushed?.Invoke();
-        else if (Input.GetKeyDown(_fireButton))
+
+        if (Input.GetKeyDown(_fireButton))
             FireButtonPushed?.Invoke();
     }
 }

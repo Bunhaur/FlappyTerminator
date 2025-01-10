@@ -24,7 +24,7 @@ public class Enemy : PoolItem<Enemy>, ITouchable
 
     private void OnDisable()
     {
-        StopCoroutine(StartShooting());
+        StopCoroutine(_startShooting);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -32,6 +32,11 @@ public class Enemy : PoolItem<Enemy>, ITouchable
         if (collision.TryGetComponent(out ITouchable item))
             if (item is Player == false)
                 DeadAction();
+    }
+
+    public void Reset()
+    {
+        _gun.Reset();
     }
 
     public IEnumerator StartShooting()

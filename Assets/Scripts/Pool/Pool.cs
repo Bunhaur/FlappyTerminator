@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -8,8 +10,11 @@ public class Pool<T> : MonoBehaviour where T : PoolItem<T>
     [SerializeField] private int _poolCapacity;
     [SerializeField] private int _maxSize;
 
-    private PoolItem<T> _tempItem;
+    protected List<PoolItem<T>> TempStorage;
+
     private ObjectPool<PoolItem<T>> _pool;
+
+    public event Action Dead;
 
     private void Awake()
     {
@@ -18,18 +23,29 @@ public class Pool<T> : MonoBehaviour where T : PoolItem<T>
 
     public void TakeObject(Vector2 newPosition, Quaternion rotation)
     {
-        _tempItem = _pool.Get();
-        _tempItem.transform.position = newPosition;
-        _tempItem.transform.rotation = rotation;
+        PoolItem<T> tempItem;
+
+        tempItem = _pool.Get();
+        tempItem.transform.position = newPosition;
+        tempItem.transform.rotation = rotation;
     }
 
-    public void ReturnObject(PoolItem<T> item)
+    public void ReturnAllObjectsInPool()
     {
+        foreach (PoolItem<T> item in TempStorage)
+            SetActive(item, false);
+    }
+
+    private void ReturnObject(PoolItem<T> item)
+    {
+        Dead?.Invoke();
         _pool.Release(item);
     }
 
     private void Init()
     {
+        TempStorage = new List<PoolItem<T>>();
+
         CreatePool();
     }
 
@@ -57,11 +73,13 @@ public class Pool<T> : MonoBehaviour where T : PoolItem<T>
 
     private PoolItem<T> Create()
     {
-        _tempItem = Instantiate(Prefab, transform.position, Quaternion.identity, transform);
+        PoolItem<T> tempItem;
 
-        AddListener(_tempItem);
+        tempItem = Instantiate(Prefab, transform.position, Quaternion.identity, transform);
+        AddListener(tempItem);
+        TempStorage.Add(tempItem);
 
-        return _tempItem;
+        return tempItem;
     }
 
     private void DestroyItem(PoolItem<T> item)

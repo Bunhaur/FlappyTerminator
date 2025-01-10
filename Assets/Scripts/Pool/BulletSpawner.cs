@@ -10,6 +10,11 @@ public class BulletSpawner : Spawner<Bullet>
         Init();
     }
 
+    public void Reset()
+    {
+        OffActiveObjects();
+    }
+
     public void Shoot(Quaternion rotation)
     {
         if (_canShoot == false)
